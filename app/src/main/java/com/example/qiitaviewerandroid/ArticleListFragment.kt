@@ -16,7 +16,7 @@ import com.example.qiitaviewerandroid.databinding.FragmentArticleListBinding
  */
 class ArticleListFragment : Fragment() {
 
-    private val dummyData = listOf<String>("hoge", "fuga", "moge")
+    private val dummyData = ArticleOverview.dummyData()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

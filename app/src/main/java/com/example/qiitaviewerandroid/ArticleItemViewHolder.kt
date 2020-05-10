@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 
 class ArticleAdapter: RecyclerView.Adapter<ArticleAdapter.ArticleItemViewHolder>() {
 
-    var articles = listOf<String>()
+    var articles = listOf<ArticleOverview>()
         set(value) {
             field = value
             notifyDataSetChanged()
@@ -36,8 +36,8 @@ class ArticleAdapter: RecyclerView.Adapter<ArticleAdapter.ArticleItemViewHolder>
 
         private val textView: TextView = view.findViewById(R.id.article_item_title)
 
-        fun bind(item: String) {
-            textView.text = item
+        fun bind(item: ArticleOverview) {
+            textView.text = item.title
         }
 
     }
