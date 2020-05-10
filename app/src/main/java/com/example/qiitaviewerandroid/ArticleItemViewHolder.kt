@@ -29,15 +29,17 @@ class ArticleAdapter: RecyclerView.Adapter<ArticleAdapter.ArticleItemViewHolder>
         companion object {
             fun from(parent: ViewGroup): ArticleItemViewHolder {
                 val layoutInflater = LayoutInflater.from(parent.context)
-                val articleTextView = layoutInflater.inflate(R.layout.article_item_view, parent, false) as TextView
-                return ArticleItemViewHolder(articleTextView)
+                val articleView = layoutInflater.inflate(R.layout.article_item_view, parent, false)
+                return ArticleItemViewHolder(articleView)
             }
         }
 
-        private val textView: TextView = view.findViewById(R.id.article_item_title)
+        private val contributorView: TextView = view.findViewById(R.id.article_item_contributor)
+        private val titleView: TextView = view.findViewById(R.id.article_item_title)
 
         fun bind(item: ArticleOverview) {
-            textView.text = item.title
+            contributorView.text = item.contributor
+            titleView.text = item.title
         }
 
     }
