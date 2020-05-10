@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 
 class ArticleAdapter: RecyclerView.Adapter<ArticleAdapter.ArticleItemViewHolder>() {
 
-    var articles = listOf<String>()
+    var articles = listOf<ArticleOverview>()
         set(value) {
             field = value
             notifyDataSetChanged()
@@ -29,15 +29,19 @@ class ArticleAdapter: RecyclerView.Adapter<ArticleAdapter.ArticleItemViewHolder>
         companion object {
             fun from(parent: ViewGroup): ArticleItemViewHolder {
                 val layoutInflater = LayoutInflater.from(parent.context)
-                val articleTextView = layoutInflater.inflate(R.layout.article_item_view, parent, false) as TextView
-                return ArticleItemViewHolder(articleTextView)
+                val articleView = layoutInflater.inflate(R.layout.article_item_view, parent, false)
+                return ArticleItemViewHolder(articleView)
             }
         }
 
-        private val textView: TextView = view.findViewById(R.id.article_item_title)
+        private val contributorView: TextView = view.findViewById(R.id.article_item_contributor)
+        private val titleView: TextView = view.findViewById(R.id.article_item_title)
+        private val dateView: TextView = view.findViewById(R.id.article_item_date)
 
-        fun bind(item: String) {
-            textView.text = item
+        fun bind(item: ArticleOverview) {
+            contributorView.text = item.contributor
+            titleView.text = item.title
+            dateView.text = item.postingDate
         }
 
     }
