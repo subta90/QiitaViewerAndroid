@@ -36,10 +36,12 @@ class ArticleAdapter: RecyclerView.Adapter<ArticleAdapter.ArticleItemViewHolder>
 
         private val contributorView: TextView = view.findViewById(R.id.article_item_contributor)
         private val titleView: TextView = view.findViewById(R.id.article_item_title)
+        private val dateView: TextView = view.findViewById(R.id.article_item_date)
 
         fun bind(item: ArticleOverview) {
             contributorView.text = item.contributor
             titleView.text = item.title
+            dateView.text = item.postingDate
         }
 
     }
