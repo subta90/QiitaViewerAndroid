@@ -4,6 +4,8 @@ apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
 
+apply plugin: 'kotlin-kapt'
+
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.0"
@@ -47,5 +49,6 @@ dependencies {
 
     // Moshi
     implementation "com.squareup.moshi:moshi:$version_moshi"
+    kapt "com.squareup.moshi:moshi-kotlin-codegen:$version_moshi"
 
 }
