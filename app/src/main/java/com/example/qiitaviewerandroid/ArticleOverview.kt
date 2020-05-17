@@ -42,10 +42,12 @@ data class ArticleOverview(
         }
     }
 
+    @JsonClass(generateAdapter = true)
     data class User(
         val name: String
     )
 
+    @JsonClass(generateAdapter = true)
     data class Tag(
         val name: String
     )
