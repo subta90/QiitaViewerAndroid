@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 
 class TagsAdapter: RecyclerView.Adapter<TagsAdapter.TagsViewHolder>() {
 
-    var tags = listOf<String>()
+    var tags = listOf<ArticleOverview.Tag>()
         set(value) {
             field = value
             notifyDataSetChanged()
@@ -21,7 +21,7 @@ class TagsAdapter: RecyclerView.Adapter<TagsAdapter.TagsViewHolder>() {
     override fun getItemCount() = tags.size
 
     override fun onBindViewHolder(holder: TagsViewHolder, position: Int) {
-        val tagName = tags[position]
+        val tagName = tags[position].name
         holder.bind(tagName)
     }
 
