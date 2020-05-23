@@ -15,7 +15,7 @@ data class ArticleOverview(
 
     @JsonClass(generateAdapter = true)
     data class User(
-        val name: String
+        val id: String
     )
 
     @JsonClass(generateAdapter = true)
