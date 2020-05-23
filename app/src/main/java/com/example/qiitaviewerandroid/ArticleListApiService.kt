@@ -12,7 +12,8 @@ private const val BASE_URL = "https://qiita.com"
 class ArticleListApiService {
 
     private val httpClient = OkHttpClient()
-    private val adapter: JsonAdapter<List<ArticleOverview>> = Moshi.Builder().build().adapter(Types.newParameterizedType(List::class.java, ArticleOverview::class.java))
+    private val adapter: JsonAdapter<List<ArticleOverview>> = Moshi.Builder().build()
+        .adapter(Types.newParameterizedType(List::class.java, ArticleOverview::class.java))
 
     fun fetchArticleList(page: Int, perPage: Int, query: String?): List<ArticleOverview>? {
         val targetURL = "$BASE_URL/api/v2/items"
@@ -27,7 +28,7 @@ class ArticleListApiService {
 
         val response = httpClient.newCall(request).execute()
 
-        val responseBody = response.body?.string()
+        val responseBody = response.body?.string() ?: return null
 
         return adapter.fromJson(responseBody)
     }
