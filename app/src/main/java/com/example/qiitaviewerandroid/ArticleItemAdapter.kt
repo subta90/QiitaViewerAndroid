@@ -40,9 +40,9 @@ class ArticleAdapter: RecyclerView.Adapter<ArticleAdapter.ArticleItemViewHolder>
         private val tagsView: RecyclerView = view.findViewById(R.id.article_item_tags)
 
         fun bind(item: ArticleOverview) {
-            contributorView.text = item.contributor
+            contributorView.text = item.user.name
             titleView.text = item.title
-            dateView.text = item.postingDate
+            dateView.text = item.createdAt
 
             val adapter = TagsAdapter()
             adapter.tags = item.tags
