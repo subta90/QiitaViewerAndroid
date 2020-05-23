@@ -21,7 +21,11 @@ class ArticleListViewModel : ViewModel() {
     private val perPage = 10
     private var currentQuery: String? = null
 
-    fun fetchArticleList() {
+    init {
+        fetchArticleList()
+    }
+
+    private fun fetchArticleList() {
         coroutineScope.launch {
             withContext(Dispatchers.Default) {
                 apiService.fetchArticleList(

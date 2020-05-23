@@ -5,8 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
-import androidx.databinding.DataBindingUtil.inflate
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.qiitaviewerandroid.databinding.FragmentArticleListBinding
 
@@ -27,8 +26,11 @@ class ArticleListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val binding = FragmentArticleListBinding.inflate(inflater)
+
+        binding.lifecycleOwner = viewLifecycleOwner
+
         binding.viewModel = viewModel
-        val adapter = ArticleAdapter()
+        val adapter = ArticleListItemAdapter()
         binding.articleListRecyclerview.adapter = adapter
         return binding.root
     }
