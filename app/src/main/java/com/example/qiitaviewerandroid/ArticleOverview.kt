@@ -2,7 +2,6 @@ package com.example.qiitaviewerandroid
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
-import kotlinx.android.parcel.Parcelize
 
 @JsonClass(generateAdapter = true)
 data class ArticleOverview(
