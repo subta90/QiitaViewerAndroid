@@ -21,7 +21,9 @@ class ArticleListApiService {
         val httpUrl = targetURL.toHttpUrlOrNull()?.newBuilder().also { it ->
             it?.addQueryParameter("page", page.toString())
             it?.addQueryParameter("per_page", perPage.toString())
-            it?.addQueryParameter("query", query)
+            query?.let { query ->
+                it?.addQueryParameter("query", query)
+            }
         }?.build() ?: return null
 
         val request = Request.Builder().url(httpUrl).get().build()
