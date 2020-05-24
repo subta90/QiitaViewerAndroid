@@ -64,7 +64,7 @@
                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/article_item_title"
+                app:layout_constraintTop_toBottomOf="@id/article_item_title"
                 app:spanCount="5"
                 app:tags="@{property.tags}" />
 
