@@ -5,9 +5,17 @@ import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 
 @BindingAdapter("articleListData")
-fun bindRecyclerView(recyclerView: RecyclerView, data: List<ArticleOverview>?) {
+fun bindListRecyclerView(recyclerView: RecyclerView, data: List<ArticleOverview>?) {
     val adapter = recyclerView.adapter as ArticleListItemAdapter
     adapter.submitList(data)
+}
+
+@BindingAdapter("tags")
+fun bindTagsRecyclerView(recyclerView: RecyclerView, tags: List<ArticleOverview.Tag>?) {
+    tags?.let {
+        val adapter = recyclerView.adapter as TagsAdapter
+        adapter.submitList(tags)
+    }
 }
 
 @BindingAdapter("contributorText")
@@ -30,3 +38,4 @@ fun bindDate(textView: TextView, dateString: String?) {
         textView.text = dateString
     }
 }
+

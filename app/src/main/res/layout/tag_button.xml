@@ -1,6 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Button xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/tag_button"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:background="#00000000"/>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="tag"
+            type="com.example.qiitaviewerandroid.ArticleOverview.Tag" />
+    </data>
+
+    <Button
+        android:id="@+id/tag_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#00000000"
+        android:minHeight="1dp"
+        android:text="@{tag.name}" />
+
+</layout>
+
+
+
