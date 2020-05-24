@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.qiitaviewerandroid.databinding.FragmentArticleListBinding
 
 /**
@@ -29,9 +30,23 @@ class ArticleListFragment : Fragment() {
 
         binding.lifecycleOwner = viewLifecycleOwner
 
+        viewModel.loadingState.observe(viewLifecycleOwner, Observer {
+            when (it) {
+                ArticleListLoadingState.COMPLETE -> {
+                    binding.articleListSwipeRefresh.isRefreshing = false
+                }
+            }
+        })
+
         binding.viewModel = viewModel
+
         val adapter = ArticleListItemAdapter()
         binding.articleListRecyclerview.adapter = adapter
+
+        binding.articleListSwipeRefresh.setOnRefreshListener {
+            viewModel.refresh()
+        }
+
         return binding.root
     }
 }
