@@ -35,6 +35,8 @@ class ArticleListItemAdapter :
     class ArticleOverViewViewHolder(private var binding: ArticleItemViewBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(overview: ArticleOverview) {
             binding.property = overview
+            val adapter = TagsAdapter()
+            binding.articleItemTags.adapter = adapter
             binding.executePendingBindings()
         }
     }
