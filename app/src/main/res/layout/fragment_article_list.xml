@@ -15,11 +15,18 @@
         android:layout_height="match_parent"
         tools:context=".ArticleListFragment">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/article_list_recyclerview"
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/article_list_swipe_refresh"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:articleListData="@{viewModel.articleList}"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+            android:layout_height="match_parent">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/article_list_recyclerview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:articleListData="@{viewModel.articleList}"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
     </FrameLayout>
 </layout>
