@@ -2,13 +2,15 @@ package com.example.qiitaviewerandroid
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.paging.PagedList
+import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.qiitaviewerandroid.databinding.ArticleItemViewBinding
 
 class ArticleListItemAdapter :
-    ListAdapter<ArticleOverview, ArticleListItemAdapter.ArticleOverViewViewHolder>(DiffCallback) {
+    PagedListAdapter<ArticleOverview, ArticleListItemAdapter.ArticleOverViewViewHolder>(DiffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ArticleOverViewViewHolder {
         return ArticleOverViewViewHolder(ArticleItemViewBinding.inflate(LayoutInflater.from(parent.context)))
@@ -33,7 +35,7 @@ class ArticleListItemAdapter :
     }
 
     class ArticleOverViewViewHolder(private var binding: ArticleItemViewBinding): RecyclerView.ViewHolder(binding.root) {
-        fun bind(overview: ArticleOverview) {
+        fun bind(overview: ArticleOverview?) {
             binding.property = overview
             val adapter = TagsAdapter()
             binding.articleItemTags.adapter = adapter
