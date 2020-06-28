@@ -6,6 +6,8 @@ apply plugin: 'kotlin-android-extensions'
 
 apply plugin: 'kotlin-kapt'
 
+apply plugin: 'dagger.hilt.android.plugin'
+
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.0"
@@ -56,5 +58,9 @@ dependencies {
 
     // Paging
     implementation "androidx.paging:paging-runtime:$version_paging"
+
+    // Dagger Hilt
+    implementation "com.google.dagger:hilt-android:$version_dagger_hilt"
+    kapt "com.google.dagger:hilt-android-compiler:$version_dagger_hilt"
 
 }
