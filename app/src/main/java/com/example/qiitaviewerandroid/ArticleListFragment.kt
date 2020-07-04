@@ -5,10 +5,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import androidx.lifecycle.lifecycleScope
+import androidx.paging.LoadState
 import com.example.qiitaviewerandroid.databinding.FragmentArticleListBinding
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 /**
  * A simple [Fragment] subclass.
@@ -21,6 +24,19 @@ class ArticleListFragment : Fragment() {
         ViewModelProvider.NewInstanceFactory().create(ArticleListViewModel::class.java)
     }
 
+    private val adapter = ArticleListItemAdapter()
+
+    private var searchJob: Job? = null
+
+    private fun search(query: String? = null) {
+        searchJob?.cancel()
+        searchJob = lifecycleScope.launch {
+            viewModel.searchArticleList(query).collectLatest {
+                adapter.submitData(it)
+            }
+        }
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -30,22 +46,19 @@ class ArticleListFragment : Fragment() {
 
         binding.lifecycleOwner = viewLifecycleOwner
 
-        viewModel.loadingState.observe(viewLifecycleOwner, Observer {
-            when (it) {
-                ArticleListLoadingState.COMPLETE -> {
-                    binding.articleListSwipeRefresh.isRefreshing = false
-                }
+        binding.articleListSwipeRefresh.setOnRefreshListener {
+            adapter.refresh()
+        }
+
+        lifecycleScope.launch {
+            adapter.loadStateFlow.collectLatest { loadStates ->
+                binding.articleListSwipeRefresh.isRefreshing = loadStates.refresh is LoadState.Loading
             }
-        })
+        }
 
-        binding.viewModel = viewModel
-
-        val adapter = ArticleListItemAdapter()
         binding.articleListRecyclerview.adapter = adapter
 
-        binding.articleListSwipeRefresh.setOnRefreshListener {
-            viewModel.refresh()
-        }
+        search()
 
         return binding.root
     }

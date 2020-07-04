@@ -1,37 +1,32 @@
 package com.example.qiitaviewerandroid
 
-import android.util.Log
-import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
-import com.squareup.moshi.Types
-import okhttp3.*
-import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
+import retrofit2.Retrofit
+import retrofit2.converter.moshi.MoshiConverterFactory
+import retrofit2.http.GET
+import retrofit2.http.Query
 
 private const val BASE_URL = "https://qiita.com"
 
-class ArticleListApiService {
+private val moshi = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
 
-    private val httpClient = OkHttpClient()
-    private val adapter: JsonAdapter<List<ArticleOverview>> = Moshi.Builder().build()
-        .adapter(Types.newParameterizedType(List::class.java, ArticleOverview::class.java))
+private val retrofit =
+    Retrofit.Builder().addConverterFactory(MoshiConverterFactory.create(moshi)).baseUrl(BASE_URL)
+        .build()
 
-    fun fetchArticleList(page: Int, perPage: Int, query: String?): List<ArticleOverview>? {
-        val targetURL = "$BASE_URL/api/v2/items"
+interface ArticleListApiService {
 
-        val httpUrl = targetURL.toHttpUrlOrNull()?.newBuilder().also { it ->
-            it?.addQueryParameter("page", page.toString())
-            it?.addQueryParameter("per_page", perPage.toString())
-            query?.let { query ->
-                it?.addQueryParameter("query", query)
-            }
-        }?.build() ?: return null
+    @GET("/api/v2/items")
+    suspend fun fetchArticleList(
+        @Query("page") page: Int,
+        @Query("per_page") perPage: Int,
+        @Query("query") query: String? = null
+    ): List<ArticleOverview>
 
-        val request = Request.Builder().url(httpUrl).get().build()
-
-        val response = httpClient.newCall(request).execute()
-
-        val responseBody = response.body?.string() ?: return null
-
-        return adapter.fromJson(responseBody)
+    companion object {
+        fun create(): ArticleListApiService {
+            return retrofit.create(ArticleListApiService::class.java)
+        }
     }
 }

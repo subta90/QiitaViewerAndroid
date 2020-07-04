@@ -1,65 +1,29 @@
 package com.example.qiitaviewerandroid
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import kotlinx.coroutines.*
-
-enum class ArticleListLoadingState {
-    INITIALIZE,
-    REFRESHING,
-    COMPLETE,
-    ERROR
-}
+import androidx.paging.PagingData
+import kotlinx.coroutines.flow.Flow
 
 class ArticleListViewModel : ViewModel() {
 
-    private var viewModelJob = Job()
+    private var currentQueryValue: String? = null
 
-    private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
+    var currentArticleList: Flow<PagingData<ArticleOverview>>? = null
 
-    private val _articleList = MutableLiveData<List<ArticleOverview>>()
-    val articleList: LiveData<List<ArticleOverview>>
-        get() = _articleList
+    // TODO: injection
+    private val repository = ArticleListRepository(service = ArticleListApiService.create())
 
-    private val _loadingState = MutableLiveData<ArticleListLoadingState>()
-    val loadingState: LiveData<ArticleListLoadingState>
-        get() = _loadingState
-
-    private val apiService = ArticleListApiService()
-
-    private var currentPage = 0
-    private val perPage = 10
-    private var currentQuery: String? = null
-
-    init {
-        initialFetch()
-    }
-
-    fun refresh() {
-        _loadingState.value = ArticleListLoadingState.REFRESHING
-        currentPage = 0
-        fetchArticleList()
-    }
-
-    private fun initialFetch() {
-        _loadingState.value = ArticleListLoadingState.INITIALIZE
-        fetchArticleList()
-    }
-
-    private fun fetchArticleList() {
-        coroutineScope.launch {
-            withContext(Dispatchers.Default) {
-                apiService.fetchArticleList(
-                    page = currentPage + 1,
-                    perPage = perPage,
-                    query = currentQuery
-                )
-            }.let {
-                _articleList.value = it
-                currentPage++
-                _loadingState.value = ArticleListLoadingState.COMPLETE
-            }
+    fun searchArticleList(queryString: String?): Flow<PagingData<ArticleOverview>> {
+        val lastArticleList = currentArticleList
+        if (queryString == currentQueryValue && lastArticleList != null) {
+            return lastArticleList
         }
+
+        currentQueryValue = queryString
+        val newResult: Flow<PagingData<ArticleOverview>> =
+            repository.getSearchResultStream(queryString)
+        currentArticleList = newResult
+        return newResult
     }
+
 }
