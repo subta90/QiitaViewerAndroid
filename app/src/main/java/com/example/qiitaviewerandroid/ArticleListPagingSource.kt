@@ -1,39 +1,32 @@
 package com.example.qiitaviewerandroid
 
-import androidx.paging.PageKeyedDataSource
+import androidx.paging.PagingSource
+import retrofit2.HttpException
+import java.io.IOException
+
+private const val STARTING_PAGE_INDEX = 1
 
 class ArticleListPagingSource(
     private val service: ArticleListApiService,
     private val query: String?
-) : PageKeyedDataSource<Int, ArticleOverview>() {
-    override fun loadInitial(
-        params: LoadInitialParams<Int>,
-        callback: LoadInitialCallback<Int, ArticleOverview>
-    ) {
-        val page = 1
+) : PagingSource<Int, ArticleOverview>() {
+    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, ArticleOverview> {
+        val position = params.key ?: STARTING_PAGE_INDEX
 
-        val perPage = params.requestedLoadSize
+        return try {
+            val response =
+                service.fetchArticleList(page = position, perPage = params.loadSize, query = query)
+            LoadResult.Page(
+                data = response,
+                prevKey = if (position == STARTING_PAGE_INDEX) null else position - 1,
+                nextKey = if (response.isEmpty()) null else position + 1
+            )
+        } catch (exception: IOException) {
+            LoadResult.Error(exception)
+        } catch (exception: HttpException) {
+            LoadResult.Error(exception)
+        }
 
-        var items = service.fetchArticleList(page, perPage, query) ?: return
 
-        var nextPage = page + 1
-
-        callback.onResult(items, null, nextPage)
     }
-
-    override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, ArticleOverview>) {
-        val page = params.key
-
-        val perPage = params.requestedLoadSize
-
-        val items = service.fetchArticleList(page, perPage, query) ?: return
-
-        val nextPage = page + 1
-        callback.onResult(items, nextPage)
-    }
-
-    override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, ArticleOverview>) {
-        TODO("Not yet implemented")
-    }
-
 }

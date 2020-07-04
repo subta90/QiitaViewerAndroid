@@ -7,8 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.qiitaviewerandroid.databinding.FragmentArticleListBinding
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 /**
  * A simple [Fragment] subclass.
@@ -21,6 +25,19 @@ class ArticleListFragment : Fragment() {
         ViewModelProvider.NewInstanceFactory().create(ArticleListViewModel::class.java)
     }
 
+    private val adapter = ArticleListItemAdapter()
+
+    private var searchJob: Job? = null
+
+    private fun search(query: String) {
+        searchJob?.cancel()
+        searchJob = lifecycleScope.launch {
+            viewModel.searchArticleList(query).collectLatest {
+                adapter.submitData(it)
+            }
+        }
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -30,22 +47,12 @@ class ArticleListFragment : Fragment() {
 
         binding.lifecycleOwner = viewLifecycleOwner
 
-        viewModel.loadingState.observe(viewLifecycleOwner, Observer {
-            when (it) {
-                ArticleListLoadingState.COMPLETE -> {
-                    binding.articleListSwipeRefresh.isRefreshing = false
-                }
-            }
-        })
+        binding.articleListSwipeRefresh.setOnRefreshListener {
+        }
 
-        binding.viewModel = viewModel
-
-        val adapter = ArticleListItemAdapter()
         binding.articleListRecyclerview.adapter = adapter
 
-        binding.articleListSwipeRefresh.setOnRefreshListener {
-            viewModel.refresh()
-        }
+        search("Kotlin")
 
         return binding.root
     }

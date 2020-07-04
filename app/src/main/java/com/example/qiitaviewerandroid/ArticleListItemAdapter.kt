@@ -4,13 +4,14 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.paging.PagedList
 import androidx.paging.PagedListAdapter
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.qiitaviewerandroid.databinding.ArticleItemViewBinding
 
 class ArticleListItemAdapter :
-    PagedListAdapter<ArticleOverview, ArticleListItemAdapter.ArticleOverViewViewHolder>(DiffCallback) {
+    PagingDataAdapter<ArticleOverview, ArticleListItemAdapter.ArticleOverViewViewHolder>(DiffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ArticleOverViewViewHolder {
         return ArticleOverViewViewHolder(ArticleItemViewBinding.inflate(LayoutInflater.from(parent.context)))
