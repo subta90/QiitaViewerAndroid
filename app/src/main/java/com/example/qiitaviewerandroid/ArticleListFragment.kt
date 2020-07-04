@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.paging.LoadState
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.qiitaviewerandroid.databinding.FragmentArticleListBinding
 import kotlinx.coroutines.Job
@@ -48,6 +49,13 @@ class ArticleListFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
 
         binding.articleListSwipeRefresh.setOnRefreshListener {
+            adapter.refresh()
+        }
+
+        lifecycleScope.launch {
+            adapter.loadStateFlow.collectLatest { loadStates ->
+                binding.articleListSwipeRefresh.isRefreshing = loadStates.refresh is LoadState.Loading
+            }
         }
 
         binding.articleListRecyclerview.adapter = adapter
