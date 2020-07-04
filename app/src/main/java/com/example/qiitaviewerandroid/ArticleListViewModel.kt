@@ -25,7 +25,7 @@ class ArticleListViewModel : ViewModel() {
     // TODO: injection
     private val repository = ArticleListRepository(service = ArticleListApiService.create())
 
-    fun searchArticleList(queryString: String): Flow<PagingData<ArticleOverview>> {
+    fun searchArticleList(queryString: String?): Flow<PagingData<ArticleOverview>> {
         val lastArticleList = currentArticleList
         if (queryString == currentQueryValue && lastArticleList != null) {
             return lastArticleList

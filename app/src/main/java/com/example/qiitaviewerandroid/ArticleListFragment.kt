@@ -30,7 +30,7 @@ class ArticleListFragment : Fragment() {
 
     private var searchJob: Job? = null
 
-    private fun search(query: String) {
+    private fun search(query: String? = null) {
         searchJob?.cancel()
         searchJob = lifecycleScope.launch {
             viewModel.searchArticleList(query).collectLatest {
@@ -60,7 +60,7 @@ class ArticleListFragment : Fragment() {
 
         binding.articleListRecyclerview.adapter = adapter
 
-        search("Kotlin")
+        search()
 
         return binding.root
     }

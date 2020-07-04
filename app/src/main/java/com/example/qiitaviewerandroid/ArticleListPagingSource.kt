@@ -8,7 +8,7 @@ private const val STARTING_PAGE_INDEX = 1
 
 class ArticleListPagingSource(
     private val service: ArticleListApiService,
-    private val query: String?
+    private val query: String? = null
 ) : PagingSource<Int, ArticleOverview>() {
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, ArticleOverview> {
         val position = params.key ?: STARTING_PAGE_INDEX

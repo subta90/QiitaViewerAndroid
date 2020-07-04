@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.Flow
 
 class ArticleListRepository(private val service: ArticleListApiService) {
 
-    fun getSearchResultStream(query: String): Flow<PagingData<ArticleOverview>> {
+    fun getSearchResultStream(query: String? = null): Flow<PagingData<ArticleOverview>> {
         return Pager(
             config = PagingConfig(pageSize = NETWORK_PAGE_SIZE),
             pagingSourceFactory = { ArticleListPagingSource(service, query) }

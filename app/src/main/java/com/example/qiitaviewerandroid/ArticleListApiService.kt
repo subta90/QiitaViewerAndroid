@@ -21,7 +21,7 @@ interface ArticleListApiService {
     suspend fun fetchArticleList(
         @Query("page") page: Int,
         @Query("per_page") perPage: Int,
-        @Query("query") query: String?
+        @Query("query") query: String? = null
     ): List<ArticleOverview>
 
     companion object {
