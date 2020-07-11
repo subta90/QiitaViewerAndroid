@@ -1,10 +1,9 @@
 package com.example.qiitaviewerandroid
 
 import android.os.Bundle
+import android.view.*
+import android.widget.SearchView
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
@@ -61,5 +60,37 @@ class ArticleListFragment : Fragment() {
         search()
 
         return binding.root
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        menu.clear()
+        inflater.inflate(R.menu.options_menu, menu)
+
+        val searchView = SearchView((context as MainActivity).supportActionBar?.themedContext ?: context)
+        searchView.queryHint = getString(R.string.search_hint)
+        searchView.isIconified = false
+        menu.findItem(R.id.search).apply {
+            setShowAsAction(MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW or  MenuItem.SHOW_AS_ACTION_IF_ROOM)
+            actionView = searchView
+        }
+
+        searchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(p0: String?): Boolean {
+                search(p0)
+                searchView.clearFocus()
+                return true
+            }
+
+            override fun onQueryTextChange(p0: String?): Boolean {
+                return false
+            }
+        })
+
     }
 }
