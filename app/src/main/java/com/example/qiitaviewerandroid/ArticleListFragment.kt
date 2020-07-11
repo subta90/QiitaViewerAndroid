@@ -82,7 +82,9 @@ class ArticleListFragment : Fragment() {
 
         searchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(p0: String?): Boolean {
-                return false
+                search(p0)
+                searchView.clearFocus()
+                return true
             }
 
             override fun onQueryTextChange(p0: String?): Boolean {
