@@ -1,7 +1,10 @@
-package com.example.qiitaviewerandroid
+package com.example.qiitaviewerandroid.view
 
 import androidx.lifecycle.ViewModel
 import androidx.paging.PagingData
+import com.example.qiitaviewerandroid.repository.ArticleListRepository
+import com.example.qiitaviewerandroid.model.ArticleOverview
+import com.example.qiitaviewerandroid.api.ArticleListApiService
 import kotlinx.coroutines.flow.Flow
 
 class ArticleListViewModel : ViewModel() {
@@ -11,7 +14,8 @@ class ArticleListViewModel : ViewModel() {
     var currentArticleList: Flow<PagingData<ArticleOverview>>? = null
 
     // TODO: injection
-    private val repository = ArticleListRepository(service = ArticleListApiService.create())
+    private val repository =
+        ArticleListRepository(service = ArticleListApiService.create())
 
     fun searchArticleList(queryString: String?): Flow<PagingData<ArticleOverview>> {
         val lastArticleList = currentArticleList

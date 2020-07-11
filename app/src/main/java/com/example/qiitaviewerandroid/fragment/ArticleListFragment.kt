@@ -1,4 +1,4 @@
-package com.example.qiitaviewerandroid
+package com.example.qiitaviewerandroid.fragment
 
 import android.os.Bundle
 import android.view.*
@@ -7,7 +7,11 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
+import com.example.qiitaviewerandroid.activity.MainActivity
+import com.example.qiitaviewerandroid.R
 import com.example.qiitaviewerandroid.databinding.FragmentArticleListBinding
+import com.example.qiitaviewerandroid.view.ArticleListItemAdapter
+import com.example.qiitaviewerandroid.view.ArticleListViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -23,7 +27,8 @@ class ArticleListFragment : Fragment() {
         ViewModelProvider.NewInstanceFactory().create(ArticleListViewModel::class.java)
     }
 
-    private val adapter = ArticleListItemAdapter()
+    private val adapter =
+        ArticleListItemAdapter()
 
     private var searchJob: Job? = null
 

@@ -1,4 +1,4 @@
-package com.example.qiitaviewerandroid
+package com.example.qiitaviewerandroid.model
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass

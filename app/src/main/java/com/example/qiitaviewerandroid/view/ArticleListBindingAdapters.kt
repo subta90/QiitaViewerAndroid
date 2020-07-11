@@ -1,10 +1,9 @@
-package com.example.qiitaviewerandroid
+package com.example.qiitaviewerandroid.view
 
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
-import androidx.paging.PagedList
-import androidx.paging.PagingData
 import androidx.recyclerview.widget.RecyclerView
+import com.example.qiitaviewerandroid.model.ArticleOverview
 
 @BindingAdapter("tags")
 fun bindTagsRecyclerView(recyclerView: RecyclerView, tags: List<ArticleOverview.Tag>?) {

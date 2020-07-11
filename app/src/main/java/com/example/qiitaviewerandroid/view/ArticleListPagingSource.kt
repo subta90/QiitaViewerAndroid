@@ -1,6 +1,8 @@
-package com.example.qiitaviewerandroid
+package com.example.qiitaviewerandroid.view
 
 import androidx.paging.PagingSource
+import com.example.qiitaviewerandroid.model.ArticleOverview
+import com.example.qiitaviewerandroid.api.ArticleListApiService
 import retrofit2.HttpException
 import java.io.IOException
 
