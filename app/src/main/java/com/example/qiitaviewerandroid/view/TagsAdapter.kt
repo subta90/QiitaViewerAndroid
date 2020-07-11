@@ -1,17 +1,21 @@
-package com.example.qiitaviewerandroid
+package com.example.qiitaviewerandroid.view
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.Button
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.example.qiitaviewerandroid.model.ArticleOverview
 import com.example.qiitaviewerandroid.databinding.TagButtonBinding
 
-class TagsAdapter: ListAdapter<ArticleOverview.Tag, TagsAdapter.TagButtonViewHolder>(DiffCallback) {
+class TagsAdapter: ListAdapter<ArticleOverview.Tag, TagsAdapter.TagButtonViewHolder>(
+    DiffCallback
+) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TagButtonViewHolder {
-        return TagButtonViewHolder(TagButtonBinding.inflate(LayoutInflater.from(parent.context)))
+        return TagButtonViewHolder(
+            TagButtonBinding.inflate(LayoutInflater.from(parent.context))
+        )
     }
 
     override fun onBindViewHolder(holder: TagButtonViewHolder, position: Int) {

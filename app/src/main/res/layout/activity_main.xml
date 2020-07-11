@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".activity.MainActivity">
 
     <fragment
-        android:name="com.example.qiitaviewerandroid.ArticleListFragment"
+        android:name="com.example.qiitaviewerandroid.fragment.ArticleListFragment"
         android:id="@+id/fragment_article_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

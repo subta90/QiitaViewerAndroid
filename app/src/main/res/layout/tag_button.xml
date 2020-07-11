@@ -5,7 +5,7 @@
 
         <variable
             name="tag"
-            type="com.example.qiitaviewerandroid.ArticleOverview.Tag" />
+            type="com.example.qiitaviewerandroid.model.ArticleOverview.Tag" />
     </data>
 
     <Button

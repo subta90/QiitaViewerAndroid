@@ -7,7 +7,7 @@
 
         <variable
             name="property"
-            type="com.example.qiitaviewerandroid.ArticleOverview" />
+            type="com.example.qiitaviewerandroid.model.ArticleOverview" />
     </data>
 
     <RelativeLayout
