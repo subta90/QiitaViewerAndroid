@@ -75,6 +75,8 @@ class ArticleListFragment : Fragment() {
         inflater.inflate(R.menu.options_menu, menu)
 
         val searchView = SearchView((context as MainActivity).supportActionBar?.themedContext ?: context)
+        searchView.queryHint = getString(R.string.search_hint)
+        searchView.isIconified = false
         menu.findItem(R.id.search).apply {
             setShowAsAction(MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW or  MenuItem.SHOW_AS_ACTION_IF_ROOM)
             actionView = searchView
@@ -92,6 +94,5 @@ class ArticleListFragment : Fragment() {
             }
         })
 
-        searchView.setOnClickListener { view -> }
     }
 }
