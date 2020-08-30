@@ -3,10 +3,10 @@ package com.example.qiitaviewerandroid.fragment
 import android.os.Bundle
 import android.view.*
 import android.widget.SearchView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.findNavController
 import androidx.paging.LoadState
 import com.example.qiitaviewerandroid.activity.MainActivity
 import com.example.qiitaviewerandroid.R
@@ -30,8 +30,7 @@ class ArticleListFragment : Fragment() {
 
     private val adapter =
         ArticleListItemAdapter(ArticleListItemAdapter.ArticleListItemListner {
-            // TODO: 詳細画面に遷移
-            Toast.makeText(context, "${it.title}", Toast.LENGTH_LONG).show()
+            view?.findNavController()?.navigate(R.id.action_articleListFragment_to_articleDetailFragment)
         })
 
     private var searchJob: Job? = null
