@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.qiitaviewerandroid.model.ArticleOverview
 import com.example.qiitaviewerandroid.databinding.ArticleItemViewBinding
 
-class ArticleListItemAdapter :
+class ArticleListItemAdapter(val clickListener: ArticleListItemListner) :
     PagingDataAdapter<ArticleOverview, ArticleListItemAdapter.ArticleOverViewViewHolder>(
         DiffCallback
     ) {
@@ -21,7 +21,7 @@ class ArticleListItemAdapter :
 
     override fun onBindViewHolder(holder: ArticleOverViewViewHolder, position: Int) {
         var articleOverview = getItem(position)
-        holder.bind(articleOverview)
+        holder.bind(articleOverview, clickListener)
     }
 
     companion object DiffCallback : DiffUtil.ItemCallback<ArticleOverview>() {
@@ -38,12 +38,17 @@ class ArticleListItemAdapter :
     }
 
     class ArticleOverViewViewHolder(private var binding: ArticleItemViewBinding): RecyclerView.ViewHolder(binding.root) {
-        fun bind(overview: ArticleOverview?) {
+        fun bind(overview: ArticleOverview?, clickListener: ArticleListItemListner) {
             binding.property = overview
+            binding.clickListener = clickListener
             val adapter = TagsAdapter()
             binding.articleItemTags.adapter = adapter
             binding.executePendingBindings()
         }
+    }
+
+    class ArticleListItemListner(val clickListener: (overview: ArticleOverview) -> Unit) {
+        fun onClick(overview: ArticleOverview) = clickListener(overview)
     }
 }
 

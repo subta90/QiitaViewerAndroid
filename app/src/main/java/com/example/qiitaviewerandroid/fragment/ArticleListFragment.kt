@@ -3,6 +3,7 @@ package com.example.qiitaviewerandroid.fragment
 import android.os.Bundle
 import android.view.*
 import android.widget.SearchView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -28,7 +29,10 @@ class ArticleListFragment : Fragment() {
     }
 
     private val adapter =
-        ArticleListItemAdapter()
+        ArticleListItemAdapter(ArticleListItemAdapter.ArticleListItemListner {
+            // TODO: 詳細画面に遷移
+            Toast.makeText(context, "${it.title}", Toast.LENGTH_LONG).show()
+        })
 
     private var searchJob: Job? = null
 
@@ -96,6 +100,5 @@ class ArticleListFragment : Fragment() {
                 return false
             }
         })
-
     }
 }
