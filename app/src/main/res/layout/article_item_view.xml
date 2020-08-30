@@ -8,11 +8,15 @@
         <variable
             name="property"
             type="com.example.qiitaviewerandroid.model.ArticleOverview" />
+        <variable
+            name="clickListener"
+            type="com.example.qiitaviewerandroid.view.ArticleListItemAdapter.ArticleListItemListner" />
     </data>
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:onClick="@{() -> clickListener.onClick(property)}">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
