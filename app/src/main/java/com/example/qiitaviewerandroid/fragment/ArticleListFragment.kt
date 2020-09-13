@@ -30,7 +30,8 @@ class ArticleListFragment : Fragment() {
 
     private val adapter =
         ArticleListItemAdapter(ArticleListItemAdapter.ArticleListItemListner {
-            view?.findNavController()?.navigate(R.id.action_articleListFragment_to_articleDetailFragment)
+            val action = ArticleListFragmentDirections.actionArticleListFragmentToArticleDetailFragment(it)
+            view?.findNavController()?.navigate(action)
         })
 
     private var searchJob: Job? = null
