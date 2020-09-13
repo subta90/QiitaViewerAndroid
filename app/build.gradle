@@ -76,4 +76,8 @@ dependencies {
     implementation "androidx.navigation:navigation-fragment:$version_nav"
     implementation "androidx.navigation:navigation-ui-ktx:$version_nav"
 
+    // Parceler
+    implementation "org.parceler:parceler-api:$version_parceler"
+    annotationProcessor "org.parceler:parceler:$version_parceler"
+
 }

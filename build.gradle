@@ -9,6 +9,7 @@ buildscript {
         version_paging = '3.0.0-alpha02'
         version_dagger_hilt = '2.28-alpha'
         version_nav = '2.3.0'
+        version_parceler = '1.1.12'
     }
 
     repositories {
