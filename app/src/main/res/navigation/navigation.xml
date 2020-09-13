@@ -19,5 +19,8 @@
         android:id="@+id/articleDetailFragment"
         android:name="com.example.qiitaviewerandroid.fragment.ArticleDetailFragment"
         android:label="fragment_article_detail"
-        tools:layout="@layout/fragment_article_detail" />
+        tools:layout="@layout/fragment_article_detail" >
+        <argument android:name="articleOverview"
+            app:argType="com.example.qiitaviewerandroid.model.ArticleOverview" />
+    </fragment>
 </navigation>
