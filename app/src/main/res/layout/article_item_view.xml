@@ -4,10 +4,10 @@
 
     <data>
 
-
         <variable
             name="property"
             type="com.example.qiitaviewerandroid.model.ArticleOverview" />
+
         <variable
             name="clickListener"
             type="com.example.qiitaviewerandroid.view.ArticleListItemAdapter.ArticleListItemListner" />

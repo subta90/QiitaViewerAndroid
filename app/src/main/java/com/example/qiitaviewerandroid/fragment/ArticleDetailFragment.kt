@@ -23,7 +23,13 @@ class ArticleDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val titleTextView = view.findViewById<TextView>(R.id.article_detail_title_view)
-        titleTextView.text = args.articleOverview.title
+        val titleView = view.findViewById<TextView>(R.id.article_detail_title_view)
+        titleView.text = args.articleOverview.title
+
+        val authorView = view.findViewById<TextView>(R.id.article_detail_author_view)
+        authorView.text = args.articleOverview.user.id
+
+        val dateView = view.findViewById<TextView>(R.id.article_detail_date_view)
+        dateView.text = args.articleOverview.createdAt
     }
 }
