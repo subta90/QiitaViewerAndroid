@@ -6,6 +6,7 @@ import android.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.findNavController
 import androidx.paging.LoadState
 import com.example.qiitaviewerandroid.activity.MainActivity
 import com.example.qiitaviewerandroid.R
@@ -28,7 +29,10 @@ class ArticleListFragment : Fragment() {
     }
 
     private val adapter =
-        ArticleListItemAdapter()
+        ArticleListItemAdapter(ArticleListItemAdapter.ArticleListItemListner {
+            val action = ArticleListFragmentDirections.actionArticleListFragmentToArticleDetailFragment(it)
+            view?.findNavController()?.navigate(action)
+        })
 
     private var searchJob: Job? = null
 
@@ -96,6 +100,5 @@ class ArticleListFragment : Fragment() {
                 return false
             }
         })
-
     }
 }

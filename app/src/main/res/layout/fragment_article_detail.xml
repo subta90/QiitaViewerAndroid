@@ -1,65 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-
-    <data>
-
-        <variable
-            name="property"
-            type="com.example.qiitaviewerandroid.model.ArticleOverview" />
-
-        <variable
-            name="clickListener"
-            type="com.example.qiitaviewerandroid.view.ArticleListItemAdapter.ArticleListItemListner" />
-    </data>
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="@{() -> clickListener.onClick(property)}">
+        android:layout_height="match_parent"
+        tools:context=".fragment.ArticleDetailFragment">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/article_item_contributor"
+                android:id="@+id/article_detail_title_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="8dp"
+                android:text="@string/article_detail_title_default_text"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/article_detail_author_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginLeft="8dp"
                 android:layout_marginTop="8dp"
-                android:textStyle="bold"
-                app:contributorText="@{property.user.id}"
+                android:gravity="left"
+                android:text="@string/article_detail_author_default_text"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@id/article_detail_title_view" />
 
             <TextView
-                android:id="@+id/article_item_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="24dp"
-                android:textColor="@android:color/primary_text_light"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/article_item_contributor"
-                app:titleText="@{property.title}" />
-
-            <TextView
-                android:id="@+id/article_item_date"
+                android:id="@+id/article_detail_date_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
-                app:dateText="@{property.createdAt}"
+                android:gravity="right"
+                android:text="@string/article_detail_date_default_text"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@id/article_detail_title_view" />
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/article_item_tags"
+                android:id="@+id/article_detail_tags_view"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
@@ -68,13 +58,11 @@
                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/article_item_title"
-                app:spanCount="5"
-                app:tags="@{property.tags}" />
-
+                app:layout_constraintTop_toBottomOf="@id/article_detail_date_view"
+                app:spanCount="5" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </RelativeLayout>
 
+    </RelativeLayout>
 </layout>

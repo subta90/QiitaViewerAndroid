@@ -7,9 +7,11 @@
     tools:context=".activity.MainActivity">
 
     <fragment
-        android:name="com.example.qiitaviewerandroid.fragment.ArticleListFragment"
-        android:id="@+id/fragment_article_list"
+        android:id="@+id/navHostFragment"
+        android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        app:defaultNavHost="true"
+        app:navGraph="@navigation/navigation" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

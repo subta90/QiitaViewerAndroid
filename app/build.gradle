@@ -8,6 +8,8 @@ apply plugin: 'kotlin-kapt'
 
 apply plugin: 'dagger.hilt.android.plugin'
 
+apply plugin: 'androidx.navigation.safeargs.kotlin'
+
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.0"
@@ -71,5 +73,13 @@ dependencies {
     // Dagger Hilt
     implementation "com.google.dagger:hilt-android:$version_dagger_hilt"
     kapt "com.google.dagger:hilt-android-compiler:$version_dagger_hilt"
+
+    // navigation
+    implementation "androidx.navigation:navigation-fragment-ktx:$version_nav"
+    implementation "androidx.navigation:navigation-ui-ktx:$version_nav"
+
+    // Parceler
+    implementation "org.parceler:parceler-api:$version_parceler"
+    kapt "org.parceler:parceler:$version_parceler"
 
 }
