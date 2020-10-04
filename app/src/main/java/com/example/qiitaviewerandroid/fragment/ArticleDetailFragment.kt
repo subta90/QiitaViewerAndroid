@@ -9,8 +9,7 @@ import android.widget.TextView
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.RecyclerView
 import com.example.qiitaviewerandroid.R
-import com.example.qiitaviewerandroid.databinding.FragmentArticleDetailBinding
-import com.example.qiitaviewerandroid.view.TagsAdapter
+import com.example.qiitaviewerandroid.view.common.TagsAdapter
 
 class ArticleDetailFragment : Fragment() {
 

@@ -11,8 +11,8 @@ import androidx.paging.LoadState
 import com.example.qiitaviewerandroid.activity.MainActivity
 import com.example.qiitaviewerandroid.R
 import com.example.qiitaviewerandroid.databinding.FragmentArticleListBinding
-import com.example.qiitaviewerandroid.view.ArticleListItemAdapter
-import com.example.qiitaviewerandroid.view.ArticleListViewModel
+import com.example.qiitaviewerandroid.view.articlelist.ArticleListItemAdapter
+import com.example.qiitaviewerandroid.view.articlelist.ArticleListViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch

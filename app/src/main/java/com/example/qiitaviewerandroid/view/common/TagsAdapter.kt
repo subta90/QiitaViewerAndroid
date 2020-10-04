@@ -1,4 +1,4 @@
-package com.example.qiitaviewerandroid.view
+package com.example.qiitaviewerandroid.view.common
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
