@@ -7,7 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.RecyclerView
 import com.example.qiitaviewerandroid.R
+import com.example.qiitaviewerandroid.databinding.FragmentArticleDetailBinding
+import com.example.qiitaviewerandroid.view.TagsAdapter
 
 class ArticleDetailFragment : Fragment() {
 
@@ -17,7 +20,6 @@ class ArticleDetailFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_article_detail, container, false)
     }
 
@@ -31,5 +33,11 @@ class ArticleDetailFragment : Fragment() {
 
         val dateView = view.findViewById<TextView>(R.id.article_detail_date_view)
         dateView.text = args.articleOverview.createdAt
+
+        val tagsAdapter = TagsAdapter()
+        val tagsView = view.findViewById<RecyclerView>(R.id.article_detail_tags_view)
+        tagsView.adapter = tagsAdapter
+        tagsAdapter.submitList(args.articleOverview.tags)
+
     }
 }
