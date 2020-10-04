@@ -3,7 +3,6 @@
     <string name="search_title">検索</string>
     <string name="search_hint">記事を検索</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="article_detail_title_default_text">Title</string>
     <string name="article_detail_author_default_text">Author</string>
     <string name="article_detail_date_default_text">Date</string>
