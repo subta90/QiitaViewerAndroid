@@ -9,7 +9,10 @@ import com.example.qiitaviewerandroid.model.ArticleOverview
 import com.example.qiitaviewerandroid.databinding.ArticleItemViewBinding
 import com.example.qiitaviewerandroid.view.common.TagsAdapter
 
-class ArticleListItemAdapter(val clickListener: ArticleListItemListner) :
+class ArticleListItemAdapter(
+    val itemClickListener: ArticleListItemListner,
+    val tagClickListener: TagsAdapter.TagButtonItemListener
+) :
     PagingDataAdapter<ArticleOverview, ArticleListItemAdapter.ArticleOverViewViewHolder>(
         DiffCallback
     ) {
@@ -22,7 +25,7 @@ class ArticleListItemAdapter(val clickListener: ArticleListItemListner) :
 
     override fun onBindViewHolder(holder: ArticleOverViewViewHolder, position: Int) {
         var articleOverview = getItem(position)
-        holder.bind(articleOverview, clickListener)
+        holder.bind(articleOverview, itemClickListener, tagClickListener)
     }
 
     companion object DiffCallback : DiffUtil.ItemCallback<ArticleOverview>() {
@@ -38,11 +41,16 @@ class ArticleListItemAdapter(val clickListener: ArticleListItemListner) :
         }
     }
 
-    class ArticleOverViewViewHolder(private var binding: ArticleItemViewBinding): RecyclerView.ViewHolder(binding.root) {
-        fun bind(overview: ArticleOverview?, clickListener: ArticleListItemListner) {
+    class ArticleOverViewViewHolder(private var binding: ArticleItemViewBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        fun bind(
+            overview: ArticleOverview?,
+            itemClickListener: ArticleListItemListner,
+            tagClickListener: TagsAdapter.TagButtonItemListener
+        ) {
             binding.property = overview
-            binding.clickListener = clickListener
-            val adapter = TagsAdapter()
+            binding.clickListener = itemClickListener
+            val adapter = TagsAdapter(tagClickListener)
             binding.articleItemTags.adapter = adapter
             binding.executePendingBindings()
         }

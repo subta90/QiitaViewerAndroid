@@ -13,6 +13,7 @@ import com.example.qiitaviewerandroid.R
 import com.example.qiitaviewerandroid.databinding.FragmentArticleListBinding
 import com.example.qiitaviewerandroid.view.articlelist.ArticleListItemAdapter
 import com.example.qiitaviewerandroid.view.articlelist.ArticleListViewModel
+import com.example.qiitaviewerandroid.view.common.TagsAdapter
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -23,11 +24,26 @@ class ArticleListFragment : Fragment() {
         ViewModelProvider.NewInstanceFactory().create(ArticleListViewModel::class.java)
     }
 
-    private val adapter =
-        ArticleListItemAdapter(ArticleListItemAdapter.ArticleListItemListner {
-            val action = ArticleListFragmentDirections.actionArticleListFragmentToArticleDetailFragment(it)
+    private val itemListener: ArticleListItemAdapter.ArticleListItemListner by lazy {
+        ArticleListItemAdapter.ArticleListItemListner {
+            val action =
+                ArticleListFragmentDirections.actionArticleListFragmentToArticleDetailFragment(it)
             view?.findNavController()?.navigate(action)
-        })
+        }
+    }
+
+    private val tagListener: TagsAdapter.TagButtonItemListener by lazy {
+        TagsAdapter.TagButtonItemListener {
+            val action =
+                ArticleListFragmentDirections.actionArticleListFragmentToTagRelatedArticleListFragment(
+                    it
+                )
+            view?.findNavController()?.navigate(action)
+        }
+    }
+
+
+    private val adapter = ArticleListItemAdapter(itemListener, tagListener)
 
     private var searchJob: Job? = null
 
@@ -55,7 +71,8 @@ class ArticleListFragment : Fragment() {
 
         lifecycleScope.launch {
             adapter.loadStateFlow.collectLatest { loadStates ->
-                binding.articleListSwipeRefresh.isRefreshing = loadStates.refresh is LoadState.Loading
+                binding.articleListSwipeRefresh.isRefreshing =
+                    loadStates.refresh is LoadState.Loading
             }
         }
 
@@ -76,15 +93,16 @@ class ArticleListFragment : Fragment() {
         menu.clear()
         inflater.inflate(R.menu.options_menu, menu)
 
-        val searchView = SearchView((context as MainActivity).supportActionBar?.themedContext ?: context)
+        val searchView =
+            SearchView((context as MainActivity).supportActionBar?.themedContext ?: context)
         searchView.queryHint = getString(R.string.search_hint)
         searchView.isIconified = false
         menu.findItem(R.id.search).apply {
-            setShowAsAction(MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW or  MenuItem.SHOW_AS_ACTION_IF_ROOM)
+            setShowAsAction(MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW or MenuItem.SHOW_AS_ACTION_IF_ROOM)
             actionView = searchView
         }
 
-        searchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener {
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(p0: String?): Boolean {
                 search(p0)
                 searchView.clearFocus()

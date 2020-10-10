@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.qiitaviewerandroid.model.ArticleOverview
 import com.example.qiitaviewerandroid.databinding.TagButtonBinding
 
-class TagsAdapter: ListAdapter<ArticleOverview.Tag, TagsAdapter.TagButtonViewHolder>(
+class TagsAdapter(val clickListener: TagButtonItemListener): ListAdapter<ArticleOverview.Tag, TagsAdapter.TagButtonViewHolder>(
     DiffCallback
 ) {
 
@@ -20,7 +20,7 @@ class TagsAdapter: ListAdapter<ArticleOverview.Tag, TagsAdapter.TagButtonViewHol
 
     override fun onBindViewHolder(holder: TagButtonViewHolder, position: Int) {
         var tag = getItem(position)
-        holder.bind(tag)
+        holder.bind(tag, clickListener)
     }
 
     companion object DiffCallback: DiffUtil.ItemCallback<ArticleOverview.Tag>() {
@@ -41,9 +41,14 @@ class TagsAdapter: ListAdapter<ArticleOverview.Tag, TagsAdapter.TagButtonViewHol
     }
 
     class TagButtonViewHolder(private var binding: TagButtonBinding): RecyclerView.ViewHolder(binding.root) {
-        fun bind(tag: ArticleOverview.Tag) {
+        fun bind(tag: ArticleOverview.Tag, clickListener: TagButtonItemListener) {
             binding.tag = tag
+            binding.clickListener = clickListener
             binding.executePendingBindings()
         }
+    }
+
+    class TagButtonItemListener(val clickListener: (tag: ArticleOverview.Tag) -> Unit) {
+        fun onClick(tag: ArticleOverview.Tag) = clickListener(tag)
     }
 }

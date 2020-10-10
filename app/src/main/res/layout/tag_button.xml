@@ -6,6 +6,10 @@
         <variable
             name="tag"
             type="com.example.qiitaviewerandroid.model.ArticleOverview.Tag" />
+
+        <variable
+            name="clickListener"
+            type="com.example.qiitaviewerandroid.view.common.TagsAdapter.TagButtonItemListener" />
     </data>
 
     <Button
@@ -14,7 +18,8 @@
         android:layout_height="wrap_content"
         android:background="#00000000"
         android:minHeight="1dp"
-        android:text="@{tag.name}" />
+        android:text="@{tag.name}"
+        android:onClick="@{() -> clickListener.onClick(tag)}"/>
 
 </layout>
 
