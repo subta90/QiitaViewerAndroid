@@ -17,11 +17,6 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
-/**
- * A simple [Fragment] subclass.
- * Use the [ArticleListFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class ArticleListFragment : Fragment() {
 
     private val viewModel: ArticleListViewModel by lazy {
