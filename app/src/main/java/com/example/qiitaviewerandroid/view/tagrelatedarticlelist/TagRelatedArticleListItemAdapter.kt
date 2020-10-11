@@ -61,12 +61,12 @@ class TagRelatedArticleListItemAdapter(
         ): Boolean {
             return oldItem.id == newItem.id
         }
+    }
 
-        class TagRelatedArticleListHeaderViewHolder(private var binding: TagRelatedArticleListHeaderViewBinding) :
-            RecyclerView.ViewHolder(binding.root) {
-            fun bind(tag: ArticleOverview.Tag) {
-                binding.property = tag
-            }
+    class TagRelatedArticleListHeaderViewHolder(private var binding: TagRelatedArticleListHeaderViewBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        fun bind(tag: ArticleOverview.Tag) {
+            binding.property = tag
         }
     }
 }
