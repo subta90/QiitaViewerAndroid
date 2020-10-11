@@ -6,4 +6,5 @@
     <string name="article_detail_title_default_text">Title</string>
     <string name="article_detail_author_default_text">Author</string>
     <string name="article_detail_date_default_text">Date</string>
+    <string name="tagRelatedArticleListHeaderDefaultTagName">tagName</string>
 </resources>
