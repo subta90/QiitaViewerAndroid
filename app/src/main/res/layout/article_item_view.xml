@@ -10,7 +10,7 @@
 
         <variable
             name="clickListener"
-            type="com.example.qiitaviewerandroid.view.ArticleListItemAdapter.ArticleListItemListner" />
+            type="com.example.qiitaviewerandroid.view.articlelist.ArticleListItemAdapter.ArticleListItemListner" />
     </data>
 
     <RelativeLayout

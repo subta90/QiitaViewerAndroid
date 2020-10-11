@@ -1,4 +1,4 @@
-package com.example.qiitaviewerandroid.view
+package com.example.qiitaviewerandroid.view.articlelist
 
 import androidx.lifecycle.ViewModel
 import androidx.paging.PagingData
@@ -6,6 +6,7 @@ import com.example.qiitaviewerandroid.repository.ArticleListRepository
 import com.example.qiitaviewerandroid.model.ArticleOverview
 import com.example.qiitaviewerandroid.api.ArticleListApiService
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 
 class ArticleListViewModel : ViewModel() {
 
@@ -25,7 +26,7 @@ class ArticleListViewModel : ViewModel() {
 
         currentQueryValue = queryString
         val newResult: Flow<PagingData<ArticleOverview>> =
-            repository.getSearchResultStream(queryString)
+            repository.getSearchArticleListStream(queryString)
         currentArticleList = newResult
         return newResult
     }

@@ -5,12 +5,13 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.example.qiitaviewerandroid.model.ArticleOverview
 import com.example.qiitaviewerandroid.api.ArticleListApiService
-import com.example.qiitaviewerandroid.view.ArticleListPagingSource
+import com.example.qiitaviewerandroid.view.articlelist.ArticleListPagingSource
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 
 class ArticleListRepository(private val service: ArticleListApiService) {
 
-    fun getSearchResultStream(query: String? = null): Flow<PagingData<ArticleOverview>> {
+    fun getSearchArticleListStream(query: String? = null): Flow<PagingData<ArticleOverview>> {
         return Pager(
             config = PagingConfig(pageSize = NETWORK_PAGE_SIZE),
             pagingSourceFactory = {
@@ -22,8 +23,9 @@ class ArticleListRepository(private val service: ArticleListApiService) {
         ).flow
     }
 
+    // TODO: 置き場所
     companion object {
-        private const val NETWORK_PAGE_SIZE = 10
+        const val NETWORK_PAGE_SIZE = 10
     }
 
 }

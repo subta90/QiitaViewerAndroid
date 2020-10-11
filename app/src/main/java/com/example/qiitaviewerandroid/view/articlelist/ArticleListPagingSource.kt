@@ -1,4 +1,4 @@
-package com.example.qiitaviewerandroid.view
+package com.example.qiitaviewerandroid.view.articlelist
 
 import androidx.paging.PagingSource
 import com.example.qiitaviewerandroid.model.ArticleOverview

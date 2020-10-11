@@ -6,6 +6,7 @@ import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 private const val BASE_URL = "https://qiita.com"
@@ -13,25 +14,22 @@ private const val BASE_URL = "https://qiita.com"
 private val moshi = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
 
 private val retrofit =
-    Retrofit.Builder().addConverterFactory(MoshiConverterFactory.create(moshi)).baseUrl(
-        BASE_URL
-    )
+    Retrofit.Builder().addConverterFactory(MoshiConverterFactory.create(moshi)).baseUrl(BASE_URL)
         .build()
 
-interface ArticleListApiService {
+interface TagRelatedArticleListApiService {
 
-    @GET("/api/v2/items")
-    suspend fun fetchArticleList(
+    @GET("/api/v2/tags/{tagID}/items")
+    suspend fun fetchTagRelatedArticleList(
+        @Path("tagID") tagID: String,
         @Query("page") page: Int,
-        @Query("per_page") perPage: Int,
-        @Query("query") query: String? = null
+        @Query("per_page") perPage: Int
     ): List<ArticleOverview>
 
-
     companion object {
-        fun create(): ArticleListApiService {
+        fun create(): TagRelatedArticleListApiService {
             return retrofit.create(
-                ArticleListApiService::class.java
+                TagRelatedArticleListApiService::class.java
             )
         }
     }

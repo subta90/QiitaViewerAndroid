@@ -1,9 +1,10 @@
-package com.example.qiitaviewerandroid.view
+package com.example.qiitaviewerandroid.view.articlelist
 
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.qiitaviewerandroid.model.ArticleOverview
+import com.example.qiitaviewerandroid.view.common.TagsAdapter
 
 @BindingAdapter("tags")
 fun bindTagsRecyclerView(recyclerView: RecyclerView, tags: List<ArticleOverview.Tag>?) {
