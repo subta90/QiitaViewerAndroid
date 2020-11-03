@@ -11,7 +11,7 @@ import org.parceler.ParcelProperty
 @Parcelize
 data class TagDetail @ParcelConstructor constructor(
     @Json(name = "followers_count") @ParcelProperty("followersCount") val followersCount: Int,
-    @Json(name = "icon_url") @ParcelProperty("iconUrl") val iconURL: String,
+    @Json(name = "icon_url") @ParcelProperty("iconUrl") val iconURL: String?,
     @ParcelProperty("id") val id: String,
     @Json(name = "items_count") @ParcelProperty("itemsCount") val itemsCount: Int
 ) : Parcelable

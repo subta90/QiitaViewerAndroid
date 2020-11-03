@@ -19,11 +19,13 @@
 
             <ImageView
                 android:id="@+id/tagImageView"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginLeft="8dp"
                 android:layout_marginTop="8dp"
+                android:background="#D8D6D6"
+                app:imageURL="@{tagDetail.iconURL}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -44,7 +46,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginLeft="20dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="4dp"
                 android:text="@{`投稿数: ` + Integer.toString(tagDetail.itemsCount)}"
                 app:layout_constraintStart_toEndOf="@+id/tagImageView"
                 app:layout_constraintTop_toBottomOf="@+id/tagNameView" />
@@ -55,7 +57,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginLeft="20dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="4dp"
                 android:text="@{`フォロワー: ` + Integer.toString(tagDetail.followersCount)}"
                 app:layout_constraintStart_toEndOf="@+id/postCountView"
                 app:layout_constraintTop_toBottomOf="@+id/tagNameView" />
