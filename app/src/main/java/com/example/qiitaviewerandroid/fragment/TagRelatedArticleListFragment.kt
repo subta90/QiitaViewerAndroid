@@ -14,9 +14,10 @@ import com.example.qiitaviewerandroid.view.articlelist.ArticleListItemAdapter
 import com.example.qiitaviewerandroid.view.common.TagsAdapter
 import com.example.qiitaviewerandroid.view.tagrelatedarticlelist.TagRelatedArticleListItemAdapter
 import com.example.qiitaviewerandroid.view.tagrelatedarticlelist.TagRelatedArticleListViewModel
-import kotlinx.coroutines.Job
+import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
+import okhttp3.Dispatcher
+import kotlin.coroutines.CoroutineContext
 
 class TagRelatedArticleListFragment : Fragment() {
 
@@ -44,17 +45,21 @@ class TagRelatedArticleListFragment : Fragment() {
         }
     }
 
-    private val adapter: TagRelatedArticleListItemAdapter by lazy {
-        TagRelatedArticleListItemAdapter(args.tag, itemListener, tagListener)
-    }
+    private var adapter: TagRelatedArticleListItemAdapter? = null
 
     private var searchJob: Job? = null
 
-    private fun search(tagID: String) {
-        searchJob?.cancel()
-        searchJob = lifecycleScope.launch {
+    private suspend fun searchTagDetail(tagID: String) {
+        withContext(Dispatchers.Main) {
+            val tagDetail = viewModel.searchTagDetail(tagID)
+            adapter = TagRelatedArticleListItemAdapter(tagDetail, itemListener, tagListener)
+        }
+    }
+
+    private suspend fun search(tagID: String) {
+        lifecycleScope.launch {
             viewModel.searchTagRelatedArticleList(tagID).collectLatest {
-                adapter.submitData(it)
+                adapter?.submitData(it)
             }
         }
     }
@@ -67,13 +72,16 @@ class TagRelatedArticleListFragment : Fragment() {
 
         binding.lifecycleOwner = viewLifecycleOwner
 
-        binding.tagRelatedArticleListSwipeRefresh.setOnRefreshListener {
-            adapter.refresh()
+        searchJob?.cancel()
+        searchJob = lifecycleScope.launch {
+            searchTagDetail(args.tag.name)
+            binding.tagRelatedArticleListSwipeRefresh.setOnRefreshListener {
+                adapter?.refresh()
+            }
+
+            binding.tagRelatedArticleListRecyclerview.adapter = adapter
+            search(args.tag.name)
         }
-
-        binding.tagRelatedArticleListRecyclerview.adapter = adapter
-
-        search(args.tag.name)
 
         return binding.root
     }

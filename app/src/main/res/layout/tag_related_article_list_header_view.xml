@@ -5,8 +5,8 @@
     <data>
 
         <variable
-            name="property"
-            type="com.example.qiitaviewerandroid.model.ArticleOverview.Tag" />
+            name="tagDetail"
+            type="com.example.qiitaviewerandroid.model.TagDetail" />
     </data>
 
     <RelativeLayout
@@ -34,7 +34,7 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="8dp"
-                android:text="@string/tagRelatedArticleListHeaderDefaultTagName"
+                android:text="@{tagDetail.id}"
                 app:layout_constraintStart_toEndOf="@id/tagImageView"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -42,10 +42,10 @@
                 android:id="@+id/postCountView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginLeft="20dp"
                 android:layout_marginTop="8dp"
-                android:text="postCount here"
+                android:text="@{`投稿数: ` + Integer.toString(tagDetail.itemsCount)}"
                 app:layout_constraintStart_toEndOf="@+id/tagImageView"
                 app:layout_constraintTop_toBottomOf="@+id/tagNameView" />
 
@@ -56,7 +56,7 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="8dp"
-                android:text="followerCount here"
+                android:text="@{`フォロワー: ` + Integer.toString(tagDetail.followersCount)}"
                 app:layout_constraintStart_toEndOf="@+id/postCountView"
                 app:layout_constraintTop_toBottomOf="@+id/tagNameView" />
 
@@ -68,7 +68,7 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="20dp"
-                android:text="フォロー"
+                android:text="@string/tag_follow_button"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/followerCountView" />
