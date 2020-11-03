@@ -16,7 +16,9 @@
             app:exitAnim="@anim/nav_default_exit_anim" />
         <action
             android:id="@+id/action_articleListFragment_to_tagRelatedArticleListFragment"
-            app:destination="@id/tagRelatedArticleListFragment" />
+            app:destination="@id/tagRelatedArticleListFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim" />
     </fragment>
     <fragment
         android:id="@+id/articleDetailFragment"
@@ -27,7 +29,9 @@
             app:argType="com.example.qiitaviewerandroid.model.ArticleOverview" />
         <action
             android:id="@+id/action_articleDetailFragment_to_tagRelatedArticleListFragment"
-            app:destination="@id/tagRelatedArticleListFragment" />
+            app:destination="@id/tagRelatedArticleListFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim" />
     </fragment>
     <fragment
         android:id="@+id/tagRelatedArticleListFragment"

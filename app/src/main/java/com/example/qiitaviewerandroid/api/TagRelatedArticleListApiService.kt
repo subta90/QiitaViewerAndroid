@@ -1,6 +1,7 @@
 package com.example.qiitaviewerandroid.api
 
 import com.example.qiitaviewerandroid.model.ArticleOverview
+import com.example.qiitaviewerandroid.model.TagDetail
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import retrofit2.Retrofit
@@ -25,6 +26,11 @@ interface TagRelatedArticleListApiService {
         @Query("page") page: Int,
         @Query("per_page") perPage: Int
     ): List<ArticleOverview>
+
+    @GET("/api/v2/tags/{tagID}")
+    suspend fun fetchTagDetail(
+        @Path("tagID") tagID: String
+    ): TagDetail
 
     companion object {
         fun create(): TagRelatedArticleListApiService {
