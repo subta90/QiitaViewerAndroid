@@ -78,13 +78,12 @@ class ArticleListFragment : Fragment() {
 
         binding.articleListRecyclerview.adapter = adapter
 
-        search()
-
         return binding.root
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        search()
         setHasOptionsMenu(true)
     }
 
