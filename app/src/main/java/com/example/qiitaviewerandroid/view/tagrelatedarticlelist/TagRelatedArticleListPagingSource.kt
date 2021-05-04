@@ -1,6 +1,7 @@
 package com.example.qiitaviewerandroid.view.tagrelatedarticlelist
 
 import androidx.paging.PagingSource
+import androidx.paging.PagingState
 import com.example.qiitaviewerandroid.api.TagRelatedArticleListApiService
 import com.example.qiitaviewerandroid.model.ArticleOverview
 import retrofit2.HttpException
@@ -31,6 +32,10 @@ class TagRelatedArticleListPagingSource(
         } catch (exception: HttpException) {
             LoadResult.Error(exception)
         }
+    }
+
+    override fun getRefreshKey(state: PagingState<Int, ArticleOverview>): Int? {
+        TODO("Not yet implemented")
     }
 }
 
