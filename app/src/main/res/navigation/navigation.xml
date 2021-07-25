@@ -41,5 +41,15 @@
         <argument
             android:name="tag"
             app:argType="com.example.qiitaviewerandroid.model.ArticleOverview$Tag" />
+        <action
+            android:id="@+id/action_tagRelatedArticleListFragment_to_tagRelatedArticleListFragment"
+            app:destination="@id/tagRelatedArticleListFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim" />
+        <action
+            android:id="@+id/action_tagRelatedArticleListFragment_to_articleDetailFragment"
+            app:destination="@id/articleDetailFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim" />
     </fragment>
 </navigation>
