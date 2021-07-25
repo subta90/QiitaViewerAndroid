@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.paging.LoadState
 import com.example.qiitaviewerandroid.databinding.FragmentTagRelatedArticleListBinding
 import com.example.qiitaviewerandroid.view.articlelist.ArticleListItemAdapter
 import com.example.qiitaviewerandroid.view.common.TagsAdapter
@@ -16,15 +17,14 @@ import com.example.qiitaviewerandroid.view.tagrelatedarticlelist.TagRelatedArtic
 import com.example.qiitaviewerandroid.view.tagrelatedarticlelist.TagRelatedArticleListViewModel
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.collectLatest
-import okhttp3.Dispatcher
-import kotlin.coroutines.CoroutineContext
 
 class TagRelatedArticleListFragment : Fragment() {
 
     private val args: TagRelatedArticleListFragmentArgs by navArgs()
 
     private val viewModel: TagRelatedArticleListViewModel by lazy {
-        ViewModelProvider.NewInstanceFactory().create(TagRelatedArticleListViewModel::class.java)
+        val factory = TagRelatedArticleListViewModel.Factory(args.tag.name)
+        ViewModelProvider(this, factory)[TagRelatedArticleListViewModel::class.java]
     }
 
     private val itemListener: ArticleListItemAdapter.ArticleListItemListner by lazy {
@@ -45,21 +45,19 @@ class TagRelatedArticleListFragment : Fragment() {
         }
     }
 
-    private var adapter: TagRelatedArticleListItemAdapter? = null
+    private lateinit var adapter: TagRelatedArticleListItemAdapter
 
-    private var searchJob: Job? = null
+    private lateinit var searchJob: Job
 
-    private suspend fun searchTagDetail(tagID: String) {
-        withContext(Dispatchers.Main) {
-            val tagDetail = viewModel.searchTagDetail(tagID)
-            adapter = TagRelatedArticleListItemAdapter(tagDetail, itemListener, tagListener)
-        }
+    private suspend fun searchTagDetail() {
+        val tagDetail = viewModel.searchTagDetail()
+        adapter = TagRelatedArticleListItemAdapter(tagDetail, itemListener, tagListener)
     }
 
-    private suspend fun search(tagID: String) {
+    private suspend fun search() {
         lifecycleScope.launch {
-            viewModel.searchTagRelatedArticleList(tagID).collectLatest {
-                adapter?.submitData(it)
+            viewModel.searchTagRelatedArticleList().collectLatest {
+                adapter.submitData(it)
             }
         }
     }
@@ -72,17 +70,19 @@ class TagRelatedArticleListFragment : Fragment() {
 
         binding.lifecycleOwner = viewLifecycleOwner
 
-        searchJob?.cancel()
         searchJob = lifecycleScope.launch {
-            searchTagDetail(args.tag.name)
-            binding.tagRelatedArticleListSwipeRefresh.setOnRefreshListener {
-                adapter?.refresh()
-            }
-
+            // Tagの詳細を取得しないとAdapterが初期化できないため同一CoroutineScope内で処理する
+            searchTagDetail()
+            search()
             binding.tagRelatedArticleListRecyclerview.adapter = adapter
-            search(args.tag.name)
+            adapter.loadStateFlow.collectLatest { loadStates ->
+                binding.tagRelatedArticleListSwipeRefresh.isRefreshing = loadStates.refresh is LoadState.Loading
+            }
         }
 
+        binding.tagRelatedArticleListSwipeRefresh.setOnRefreshListener {
+            adapter.refresh()
+        }
         return binding.root
     }
 

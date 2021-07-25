@@ -35,7 +35,7 @@ class TagRelatedArticleListPagingSource(
     }
 
     override fun getRefreshKey(state: PagingState<Int, ArticleOverview>): Int? {
-        TODO("Not yet implemented")
+        return state.anchorPosition
     }
 }
 
