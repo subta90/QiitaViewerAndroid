@@ -29,18 +29,14 @@ class TagRelatedArticleListFragment : Fragment() {
 
     private val itemListener: ArticleListItemAdapter.ArticleListItemListner by lazy {
         ArticleListItemAdapter.ArticleListItemListner {
-            val action =
-                ArticleListFragmentDirections.actionArticleListFragmentToArticleDetailFragment(it)
+            val action = TagRelatedArticleListFragmentDirections.actionTagRelatedArticleListFragmentToArticleDetailFragment(it)
             view?.findNavController()?.navigate(action)
         }
     }
 
     private val tagListener: TagsAdapter.TagButtonItemListener by lazy {
         TagsAdapter.TagButtonItemListener {
-            val action =
-                ArticleListFragmentDirections.actionArticleListFragmentToTagRelatedArticleListFragment(
-                    it
-                )
+            val action = TagRelatedArticleListFragmentDirections.actionTagRelatedArticleListFragmentToTagRelatedArticleListFragment(it)
             view?.findNavController()?.navigate(action)
         }
     }
