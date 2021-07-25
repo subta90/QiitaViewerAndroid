@@ -11,6 +11,7 @@ buildscript {
         version_nav = '2.3.5'
         version_parceler = '1.1.12'
         version_glide = '4.11.0'
+        version_lifecycle = '2.4.0-alpha02'
     }
 
     repositories {

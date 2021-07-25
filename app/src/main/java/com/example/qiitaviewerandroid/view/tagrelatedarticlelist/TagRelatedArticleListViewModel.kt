@@ -1,6 +1,7 @@
 package com.example.qiitaviewerandroid.view.tagrelatedarticlelist
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.paging.PagingData
 import com.example.qiitaviewerandroid.api.TagRelatedArticleListApiService
 import com.example.qiitaviewerandroid.model.ArticleOverview
@@ -8,31 +9,35 @@ import com.example.qiitaviewerandroid.model.TagDetail
 import com.example.qiitaviewerandroid.repository.TagRelatedArticleListRepository
 import kotlinx.coroutines.flow.Flow
 
-class TagRelatedArticleListViewModel : ViewModel() {
+class TagRelatedArticleListViewModel(tagID: String) : ViewModel() {
 
-    private var currentTagID: String? = null
+    // TODO: Daggerを入れる前の繋ぎ
+    class Factory(private val tagID: String): ViewModelProvider.NewInstanceFactory() {
+        override fun <T: ViewModel?> create(modelClass: Class<T>): T {
+            return TagRelatedArticleListViewModel(tagID) as T
+        }
+    }
 
-    var currentArticleList: Flow<PagingData<ArticleOverview>>? = null
+    private var currentArticleList: Flow<PagingData<ArticleOverview>>? = null
 
     // TODO: injection
     private val repository =
-        TagRelatedArticleListRepository(service = TagRelatedArticleListApiService.create())
+        TagRelatedArticleListRepository(service = TagRelatedArticleListApiService.create(),
+        tagID = tagID)
 
-    suspend fun searchTagDetail(tagID: String): TagDetail {
-        return repository.getSearchTagDetail(tagID)
+    suspend fun searchTagDetail(): TagDetail {
+        return repository.getSearchTagDetail()
     }
 
-    fun searchTagRelatedArticleList(tagID: String): Flow<PagingData<ArticleOverview>> {
+    fun searchTagRelatedArticleList(): Flow<PagingData<ArticleOverview>>  {
         val lastArticleList = currentArticleList
-        if (tagID == currentTagID && lastArticleList != null) {
+        if (lastArticleList != null) {
             return lastArticleList
         }
 
-        currentTagID = tagID
-        val newResult = repository.getSearchTagRelatedArticleListStream(tagID)
+        val newResult = repository.tagRelatedArticleListStream
         currentArticleList = newResult
         return newResult
     }
-
-
 }
+

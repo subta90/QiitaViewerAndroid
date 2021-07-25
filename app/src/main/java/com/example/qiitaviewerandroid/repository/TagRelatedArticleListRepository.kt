@@ -12,16 +12,10 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 
-class TagRelatedArticleListRepository(private val service: TagRelatedArticleListApiService) {
+class TagRelatedArticleListRepository(private val service: TagRelatedArticleListApiService, private val tagID: String) {
 
-    suspend fun getSearchTagDetail(tagID: String): TagDetail {
-        return withContext(Dispatchers.IO) {
-            service.fetchTagDetail(tagID)
-        }
-    }
-
-    fun getSearchTagRelatedArticleListStream(tagID: String): Flow<PagingData<ArticleOverview>> {
-        return Pager(
+    var tagRelatedArticleListStream: Flow<PagingData<ArticleOverview>> =
+        Pager(
             config = PagingConfig(pageSize = ArticleListRepository.NETWORK_PAGE_SIZE),
             pagingSourceFactory = {
                 TagRelatedArticleListPagingSource(
@@ -30,6 +24,10 @@ class TagRelatedArticleListRepository(private val service: TagRelatedArticleList
                 )
             }
         ).flow
-    }
 
+    suspend fun getSearchTagDetail(): TagDetail {
+        return withContext(Dispatchers.IO) {
+            service.fetchTagDetail(tagID)
+        }
+    }
 }
