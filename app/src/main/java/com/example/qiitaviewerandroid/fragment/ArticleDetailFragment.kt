@@ -6,15 +6,27 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.RecyclerView
 import com.example.qiitaviewerandroid.R
+import com.example.qiitaviewerandroid.view.articledetail.ArticleDetailViewModel
+import com.example.qiitaviewerandroid.view.articledetail.LatestArticleDetailState
 import com.example.qiitaviewerandroid.view.common.TagsAdapter
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 class ArticleDetailFragment : Fragment() {
 
     private val args: ArticleDetailFragmentArgs by navArgs()
+
+    private val viewModel: ArticleDetailViewModel by lazy {
+        ViewModelProvider.NewInstanceFactory().create(ArticleDetailViewModel::class.java)
+    }
 
     private val tagListener = TagsAdapter.TagButtonItemListener {
         val action = ArticleDetailFragmentDirections.actionArticleDetailFragmentToTagRelatedArticleListFragment(it)
@@ -43,6 +55,17 @@ class ArticleDetailFragment : Fragment() {
         val tagsView = view.findViewById<RecyclerView>(R.id.article_detail_tags_view)
         tagsView.adapter = tagsAdapter
         tagsAdapter.submitList(args.articleOverview.tags)
+
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.articleDetailState.collect {
+                    when (it) {
+                        is LatestArticleDetailState.Success -> print("success")
+                        is LatestArticleDetailState.Error -> print("error")
+                    }
+                }
+            }
+        }
 
     }
 }

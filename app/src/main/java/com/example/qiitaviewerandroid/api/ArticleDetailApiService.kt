@@ -18,7 +18,7 @@ interface ArticleDetailApiService {
 
     @GET("/api/v2/items/{item_id}")
     suspend fun fetchArticleDetail(
-        @Path("item_id") itemID: Int
+        @Path("item_id") itemID: String
     ): ArticleDetail
 
     companion object {
