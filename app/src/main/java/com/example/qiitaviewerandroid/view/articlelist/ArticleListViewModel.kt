@@ -6,7 +6,6 @@ import com.example.qiitaviewerandroid.repository.ArticleListRepository
 import com.example.qiitaviewerandroid.model.ArticleOverview
 import com.example.qiitaviewerandroid.api.ArticleListApiService
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
 
 class ArticleListViewModel : ViewModel() {
 

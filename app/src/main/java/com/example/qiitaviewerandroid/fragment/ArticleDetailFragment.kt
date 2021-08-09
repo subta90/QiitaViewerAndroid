@@ -6,15 +6,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
-import androidx.recyclerview.widget.RecyclerView
 import com.example.qiitaviewerandroid.R
+import com.example.qiitaviewerandroid.databinding.FragmentArticleDetailBinding
+import com.example.qiitaviewerandroid.view.articledetail.ArticleDetailViewModel
 import com.example.qiitaviewerandroid.view.common.TagsAdapter
 
 class ArticleDetailFragment : Fragment() {
 
     private val args: ArticleDetailFragmentArgs by navArgs()
+
+    private val viewModel: ArticleDetailViewModel by lazy {
+        val factory = ArticleDetailViewModel.Factory(args.articleOverview.id)
+        ViewModelProvider(this, factory)[ArticleDetailViewModel::class.java]
+    }
 
     private val tagListener = TagsAdapter.TagButtonItemListener {
         val action = ArticleDetailFragmentDirections.actionArticleDetailFragmentToTagRelatedArticleListFragment(it)
@@ -25,7 +32,13 @@ class ArticleDetailFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_article_detail, container, false)
+        val binding = FragmentArticleDetailBinding.inflate(inflater)
+        binding.lifecycleOwner = viewLifecycleOwner
+        binding.viewModel = viewModel
+        val tagsAdapter = TagsAdapter(tagListener)
+        binding.articleDetailTagsView.adapter = tagsAdapter
+        tagsAdapter.submitList(args.articleOverview.tags)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -38,11 +51,6 @@ class ArticleDetailFragment : Fragment() {
 
         val dateView = view.findViewById<TextView>(R.id.article_detail_date_view)
         dateView.text = args.articleOverview.createdAt
-
-        val tagsAdapter = TagsAdapter(tagListener)
-        val tagsView = view.findViewById<RecyclerView>(R.id.article_detail_tags_view)
-        tagsView.adapter = tagsAdapter
-        tagsAdapter.submitList(args.articleOverview.tags)
 
     }
 }

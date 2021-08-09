@@ -3,9 +3,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <RelativeLayout
+    <data>
+
+        <import type="com.example.qiitaviewerandroid.view.articledetail.LatestArticleDetailState" />
+
+        <variable
+            name="viewModel"
+            type="com.example.qiitaviewerandroid.view.articledetail.ArticleDetailViewModel" />
+    </data>
+
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         tools:context=".fragment.ArticleDetailFragment">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -56,13 +65,26 @@
                 android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:layout_constraintBottom_toTopOf="@+id/description_text_view"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/article_detail_date_view"
                 app:spanCount="5" />
 
+            <TextView
+                android:id="@+id/description_text_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:text="@{viewModel.articleDetailState.toBody()}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/article_detail_tags_view" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-    </RelativeLayout>
+    </androidx.core.widget.NestedScrollView>
 </layout>
